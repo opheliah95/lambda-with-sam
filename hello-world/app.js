@@ -22,23 +22,30 @@ exports.lambdaHandler = async (event, context) => {
 
     try {
         // const ret = await axios(url);
-        if (person_id && person_name){
+        if (person_id && person_name) {
             response = {
                 'statusCode': 200,
                 'body': JSON.stringify({
                     message: `hello ${person_name} you now have an id ${person_id}`,
                 })
             }
-        } else{
+        } else if (person_id == undefined || person_name == undefined) {
             response = {
                 'body': JSON.stringify({
                     message: `Error the name: ${person_name} or id: ${person_id} is empty`,
                 })
             }
 
+        } else {
+            response = {
+                'statusCode': 200,
+                'body': JSON.stringify({
+                    message: `welcome to the home page`,
+                })
+            }
         }
     } catch (err) {
-        console.log(err);
+        console.log("the error is: ", err);
         return err;
     }
 
