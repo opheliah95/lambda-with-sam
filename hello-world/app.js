@@ -15,14 +15,27 @@ let response;
  * 
  */
 exports.lambdaHandler = async (event, context) => {
+    // debuging event
+    console.log("EVENT: \n" + JSON.stringify(event, null, 2));
+    const person_name = event["queryStringParameters"]['name'] || undefined;
+    const person_id = event["queryStringParameters"]['id'] || undefined;
+
     try {
         // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'hello world this is my first lambda from vscode',
-                // location: ret.data.trim()
-            })
+        if (person_id && person_name){
+            response = {
+                'statusCode': 200,
+                'body': JSON.stringify({
+                    message: `hello ${person_name} you now have an id ${person_id}`,
+                })
+            }
+        } else{
+            response = {
+                'body': JSON.stringify({
+                    message: `Error the name: ${person_name} or id: ${person_id} is empty`,
+                })
+            }
+
         }
     } catch (err) {
         console.log(err);
